@@ -1,6 +1,6 @@
 import pygame
 from constantes import *
-from Fondo import *
+from fondo import *
 def inicializar():
 
   

@@ -1,9 +1,8 @@
 import pygame
 from abc import ABC, abstractmethod
 from colores import *
-from constantes import *
-from charco import *
-import time
+from constantes import ANCHO_VENTANA
+
 class Auto(ABC) :
   def __init__(self,path) -> None:
     self.nombre = "Auto"

@@ -1,5 +1,5 @@
 import colores
-
+import pygame
 ANCHO_VENTANA = 1000
 ALTURA_VENTANA = 700
 POSICION_FONDO_Y= 0
@@ -17,3 +17,15 @@ COLOR_TIMER = colores.WHITE
 
 COLOR_RECT_AUTO = colores.RED1
 COLOR_RECT_CHARCO = colores.BROWN
+
+#Variables iniciadoras
+avance = 0
+running = True
+juego_pausado = False
+# Variables de tiempo
+tiempo_inicio = pygame.time.get_ticks()
+tiempo_espera = 100  # Tiempo de espera en milisegundos
+tiempo_diferencia = 0
+
+charcos = []
+autos_cpu = []

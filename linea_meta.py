@@ -92,7 +92,7 @@ class Meta():
   
   def dibujar(self, pantalla):
     pantalla.blit(self.superficie, self.rect)
-    print(self.rect)
+    #print(self.rect) es para el la posicion en x ,y ,ancho, alto
     #ancho, alto = self.superficie.get_size()
     #print(f"Ancho: {ancho}, Alto: {alto}")
 

@@ -1,6 +1,6 @@
 import pygame
 from constantes import *
-from Fondo import *
+from fondo import *
 from auto import * 
 from auto_principal import *
 from auto_cpu import *

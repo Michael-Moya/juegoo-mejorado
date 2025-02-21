@@ -1,6 +1,6 @@
 import pygame
 from constantes import *
-from Fondo import *
+from fondo import *
 from auto import * 
 from auto_principal import *
 from auto_cpu import *
@@ -50,13 +50,25 @@ def generar_linea_meta(lista_meta:list):#EN REALIDAD SERIA ELIMINAR LINEA DE MET
   lista_meta_ = list(filter( lambda x: (x.rect.y < ALTURA_VENTANA), lista_meta ))    
   return lista_meta_  
 
-
-def generar_charcos(list_charcos:list,incremento):
-  charco = Charco(incremento)
-  list_charcos.append(charco)
+def generar_charcos(cantidad:int):
+  list_charcos = []
+  for i in range(cantidad):  # Usamos un guion bajo porque no necesitamos el valor de 'i'
+    charco = Charco()  # Creamos una instancia de Charco
+    list_charcos.append(charco)  # Añadimos la instancia a la lista
   return list_charcos
 
-def controlar_desestabilizacion_autos(auto_:AutoPrincipal, auto_cpu:AutoCpu):
+def generar_charcos_por_nivel(nivel:int):
+  cantidad = 0
+  match nivel:
+    case 1:
+      cantidad = 3
+    case 2:
+      cantidad = 8
+    case _:
+      print("Nivel desconocido")  # Caso """
+  return generar_charcos(cantidad)
+  
+def controlar_desestabilizacion_autos(auto_: AutoPrincipal, auto_cpu: AutoCpu):
   auto_.controlar_la_desestabilización()
   auto_cpu.controlar_la_desestabilización()
 
@@ -68,9 +80,12 @@ def revisar_colisiones_entre_autos(auto_:AutoPrincipal, auto_cpu:AutoCpu, list_c
     if charco.colisionar(auto_):
       auto_.administrar_colision()
       lista_eliminar.append(charco)
+      print("COLISION AUTO")
     elif charco.colisionar(auto_cpu):
       auto_cpu.administrar_colision()
       lista_eliminar.append(charco)
+      print("COLISION AUTO CPU ----")
+
     if charco.rect.top > ALTURA_VENTANA:
       lista_eliminar.append(charco)
   list_charcos_ = list(filter(lambda x: x not in lista_eliminar, list_charcos))
