@@ -5,7 +5,7 @@ from auto import *
 from auto_principal import *
 from funciones import *
 from instacia_objetos import*
-from prueba22 import *
+from nivel import *
 import os
 os.system('cls')  # Limpia el terminal en Windows
 
