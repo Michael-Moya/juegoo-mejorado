@@ -7,6 +7,7 @@ from funciones import *
 from instacia_objetos import*
 from nivel import *
 from prueba_temporizador import iniciar_temporizador_carrera
+from prueba12_menu import mostrar_menu, mostrar_pantalla_ranking
 import os
 os.system('cls')  # Limpia el terminal en Windows
 pygame.init()
@@ -16,17 +17,17 @@ charcos = []
 temporizador_iniciado = False 
 seleccionado = False  # Bandera para controlar que solo se seleccione una vez
 
-while cerrar_ventana():     
-  lista_meta = filtrar_linea_meta(lista_lineas_meta)
-  if not seleccionado:
-    seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
-    charcos = generar_charcos_por_nivel(nivel_seleccionado)
-  if not temporizador_iniciado:
-    iniciar_temporizador_carrera(ventana)
-    temporizador_iniciado = True  # 🔥 Se activa la bandera para evitar que se ejecute nuevamente
+if mostrar_menu(ventana) == "jugar" :  
+  lista_meta = lista_lineas_meta
+  seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
+  charcos = generar_charcos_por_nivel(nivel_seleccionado)
+  iniciar_temporizador_carrera(ventana)
+  temporizador_iniciado = True  # 🔥 Se activa la bandera para evitar que se ejecute nuevamente
+  print(id(lista_meta),"iniciooo") # estoy utilizando la misma lista copiada en Temporizador como prueba
 
-  else:
-    iniciar_temporizador_carrera(ventana)
+  while cerrar_ventana():   
+    lista_meta = filtrar_linea_meta(lista_lineas_meta)
+
     # Ajustar la frecuencia de generación
     print(len(charcos))
     avance, charcos,lista_meta = iniciar_movimiento_juego(ventana, fondo, auto_principal, avance, auto_cpu, charcos, lista_meta)
@@ -41,15 +42,11 @@ while cerrar_ventana():
         print(i.posicion_relativa, f" {j} posicion relativa")
         print(i.posicion)
       j+=1
-    
     #print(auto_principal.posicion_real, "auto PRINCIPAL")
     #print( Meta._ultima_meta.posicion_relativa)
 
     pygame.display.flip()
     reloj.tick(FPS)
+elif mostrar_menu(ventana) == "ranking" :
+  mostrar_pantalla_ranking(ventana)
 pygame.quit() 
-"""try:
-    persona.edad = -5
-except ValueError as e:
-    print(e) 
-    """  
