@@ -37,7 +37,7 @@ class Charco() :
     return imagen_charco
   
   def __posicionar(self):
-    y = random.randrange(-2800,-10,60)
+    y = random.randrange(-2800,-100,60)
     x = random.randrange(80,720,60)   
     return [x,y]
 

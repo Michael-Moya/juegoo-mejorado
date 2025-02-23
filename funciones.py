@@ -46,7 +46,7 @@ def generar_movimiento_metas(lista_meta_:list,avance_):
     if isinstance(meta, Meta):
       meta.mover(avance_)
 
-def generar_linea_meta(lista_meta:list):#EN REALIDAD SERIA ELIMINAR LINEA DE META , PERO SOLO QUEDARIA 1
+def filtrar_linea_meta(lista_meta:list):#EN REALIDAD SERIA ELIMINAR LINEA DE META , PERO SOLO QUEDARIA 1
   lista_meta_ = list(filter( lambda x: (x.rect.y < ALTURA_VENTANA), lista_meta ))    
   return lista_meta_  
 

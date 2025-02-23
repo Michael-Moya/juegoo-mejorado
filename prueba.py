@@ -6,20 +6,27 @@ from auto_principal import *
 from funciones import *
 from instacia_objetos import*
 from nivel import *
+from prueba_temporizador import iniciar_temporizador_carrera
 import os
 os.system('cls')  # Limpia el terminal en Windows
-
 pygame.init()
 pygame.display.set_caption("Racing")
 print(auto_cpu.posicion_relativa,"iniciooooooooooooooooooooooooooooooooo")
 charcos = []
+temporizador_iniciado = False 
 seleccionado = False  # Bandera para controlar que solo se seleccione una vez
+
 while cerrar_ventana():     
-  lista_meta = generar_linea_meta(lista_lineas_meta)
+  lista_meta = filtrar_linea_meta(lista_lineas_meta)
   if not seleccionado:
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
     charcos = generar_charcos_por_nivel(nivel_seleccionado)
+  if not temporizador_iniciado:
+    iniciar_temporizador_carrera(ventana)
+    temporizador_iniciado = True  # 🔥 Se activa la bandera para evitar que se ejecute nuevamente
+
   else:
+    iniciar_temporizador_carrera(ventana)
     # Ajustar la frecuencia de generación
     print(len(charcos))
     avance, charcos,lista_meta = iniciar_movimiento_juego(ventana, fondo, auto_principal, avance, auto_cpu, charcos, lista_meta)

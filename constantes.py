@@ -27,5 +27,9 @@ tiempo_inicio = pygame.time.get_ticks()
 tiempo_espera = 100  # Tiempo de espera en milisegundos
 tiempo_diferencia = 0
 
+temporizador_iniciado = False  # 🚀 Nueva bandera para controlar el temporizador
+
+lista_meta = []
 charcos = []
 autos_cpu = []
+

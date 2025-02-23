@@ -1,64 +1,72 @@
 import pygame
 import sys
-from constantes import ANCHO_VENTANA,ALTURA_VENTANA
-# Inicializar Pygame
+from constantes import ALTURA_VENTANA, ANCHO_VENTANA
+from instacia_objetos import fondo
+from fondo import Fondo
+fondo_ = Fondo("carretera.png")     
 
+# Inicializar Pygame
 pygame.init()
 
-# Definir tamaños de ventana y colores
-ANCHO, ALTO = ANCHO_VENTANA, ALTURA_VENTANA
-VENTANA = pygame.display.set_mode((ANCHO, ALTO))
-COLOR_FONDO = (0, 0, 0)
 COLOR_TEXTO = (255, 255, 255)
-
-# Fuentes
+COLOR_TEXTO_RESALTADO = (255, 255, 0)  # Amarillo cuando se resalta
 FUENTE = pygame.font.Font(None, 50)
 
-# Variables de control
-nivel_seleccionado = None  # Al principio no hay nivel seleccionado
-seleccionado = False  # Bandera para controlar que solo se seleccione una vez
+# Posiciones de los textos
+posicion_nivel1 = (ANCHO_VENTANA // 2 - 100, ALTURA_VENTANA // 2 - 50)
+posicion_nivel2 = (ANCHO_VENTANA // 2 - 100, ALTURA_VENTANA // 2 + 50)
+
+# Rectángulos invisibles para la detección de colisión
+rect_nivel1 = pygame.Rect(posicion_nivel1[0], posicion_nivel1[1], 200, 50)
+rect_nivel2 = pygame.Rect(posicion_nivel2[0], posicion_nivel2[1], 200, 50)
 
 def seleccionar_nivel(ventana):
-  global seleccionado
-  global nivel_seleccionado
-  # Si el nivel no ha sido seleccionado, mostrar opciones para seleccionar
-  if not seleccionado:
-    ventana.fill(COLOR_FONDO)
-    
-    # Mostrar opciones de nivel
-    texto_nivel1 = FUENTE.render("Nivel 1", True, COLOR_TEXTO)
-    texto_nivel2 = FUENTE.render("Nivel 2", True, COLOR_TEXTO)
-    
-    ventana.blit(texto_nivel1, (ANCHO // 2 - 100, ALTO // 2 - 50))
-    ventana.blit(texto_nivel2, (ANCHO // 2 - 100, ALTO // 2 + 50))
+    """
+    Función que muestra la pantalla de selección de nivel y detecta la elección del usuario.
+    """
+    global fondo
+    seleccionado = False
+    nivel_seleccionado = None
 
-    pygame.display.flip()
+    while not seleccionado:
+        ventana.blit(fondo_.imagen, fondo_.posicion)  # Fondo negro solo para la selección de nivel
 
-    # Detectar click del mouse para seleccionar un nivel
-    if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo del mouse está presionado
-      mouse_x, mouse_y = pygame.mouse.get_pos()
-      
-      # Verificar si se hizo clic en el Nivel 1
-      if ANCHO // 2 - 100 <= mouse_x <= ANCHO // 2 + 100 and ALTO // 2 - 50 <= mouse_y <= ALTO // 2:
-        nivel_seleccionado = 1
-        seleccionado = True  # Cambiar la bandera a True para que no se seleccione más de una vez
+        # Obtener la posición actual del mouse
+        mouse_x, mouse_y = pygame.mouse.get_pos()
 
-      # Verificar si se hizo clic en el Nivel 2
-      elif ANCHO // 2 - 100 <= mouse_x <= ANCHO // 2 + 100 and ALTO // 2 + 50 <= mouse_y <= ALTO // 2 + 150:
-        nivel_seleccionado = 2
-        seleccionado = True  # Cambiar la bandera a True para que no se seleccione más de una vez
+        # Determinar si el mouse está sobre las opciones
+        resaltar_nivel1 = rect_nivel1.collidepoint(mouse_x, mouse_y)
+        resaltar_nivel2 = rect_nivel2.collidepoint(mouse_x, mouse_y)
 
-  else:
-    ventana.fill(COLOR_FONDO)
-    if nivel_seleccionado == 1:
-      texto_nivel = FUENTE.render("Nivel 1 Seleccionado", True, COLOR_TEXTO)
-    elif nivel_seleccionado == 2:
-      texto_nivel = FUENTE.render("Nivel 2 Seleccionado", True, COLOR_TEXTO)
-    
-    ventana.blit(texto_nivel, (ANCHO // 2 - 150, ALTO // 2))
-    pygame.display.flip()
-    # Esperar unos segundos antes de pasar al siguiente nivel
-    pygame.time.wait(5000)
-    #break  # Salir del bucle para continuar con el siguiente nivel del juego
-  return seleccionado, nivel_seleccionado    
+        # Renderizar los textos con color resaltado si el mouse está sobre ellos
+        color_nivel1 = COLOR_TEXTO_RESALTADO if resaltar_nivel1 else COLOR_TEXTO
+        color_nivel2 = COLOR_TEXTO_RESALTADO if resaltar_nivel2 else COLOR_TEXTO
 
+        texto_nivel1 = FUENTE.render("Nivel 1", True, color_nivel1)
+        texto_nivel2 = FUENTE.render("Nivel 2", True, color_nivel2)
+
+        ventana.blit(texto_nivel1, posicion_nivel1)
+        ventana.blit(texto_nivel2, posicion_nivel2)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Click izquierdo
+                if resaltar_nivel1:
+                    nivel_seleccionado = 1
+                    seleccionado = True
+                elif resaltar_nivel2:
+                    nivel_seleccionado = 2
+                    seleccionado = True
+
+    # Mostrar mensaje del nivel seleccionado
+    ventana.blit(fondo_.imagen, fondo_.posicion)  # Fondo negro solo para la selección de nivel
+    texto_nivel = FUENTE.render(f"Nivel {nivel_seleccionado} Seleccionado", True, COLOR_TEXTO)
+    ventana.blit(texto_nivel, (ANCHO_VENTANA // 2 - 150, ALTURA_VENTANA // 2))
+    pygame.display.update()
+    pygame.time.wait(2000)  # Esperar 2 segundos antes de iniciar la carrera
+
+    return True, nivel_seleccionado

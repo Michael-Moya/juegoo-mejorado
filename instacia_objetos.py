@@ -17,3 +17,4 @@ meta_inicio = Meta([0,0])
 meta_final = Meta([0,-3000])
 lista_lineas_meta = [meta_inicio, meta_final]
 
+reloj = pygame.time.Clock()
