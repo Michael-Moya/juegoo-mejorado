@@ -5,7 +5,7 @@ from nivel import seleccionar_nivel
 from prueba_temporizador import iniciar_temporizador_carrera
 from prueba12_menu import mostrar_menu  # Función que muestra el menú y devuelve "jugar" o "ranking"
 from prueba_ranking import mostrar_ranking  # Pantalla del ranking
-from funciones import iniciar_movimiento_juego, fundir_todo, filtrar_linea_meta, cerrar_ventana, generar_charcos_por_nivel
+from prueba_funciones import iniciar_movimiento_juego, fundir_todo, filtrar_linea_meta, cerrar_ventana, generar_charcos_por_nivel
 # Supongamos que existe una función para actualizar el ranking si se supera el último lugar:
 from prueba_ranking import actualizar_ranking
 
@@ -14,6 +14,7 @@ from prueba_ventana_resultado2 import mostrar_pantalla_resultado  # Devuelve "vo
 partida_terminada = False
 
 def jugar():
+  accion = None
   global temporizador_iniciado, seleccionado
   avance = 0
   # Reiniciamos todos los objetos y variables
@@ -33,19 +34,26 @@ def jugar():
     fundir_todo(ventana, fondo, auto_principal, auto_cpu, charcos, lista_meta)   
     
     if flag_terminada :
-      tiempo_inicio_pantalla_resultado = pygame.time.get_ticks()
+      print("-------------------entro flag terminada-----------")
       flag_mostrar_pantalla_resultado = True
+      break
 
+    pygame.display.flip()
+    reloj.tick(FPS)  
+  print("-------------------SALIMOS DEL JUEGO-------------")
+  tiempo_inicio_pantalla_resultado = pygame.time.get_ticks()
+  while True:    
     if flag_mostrar_pantalla_resultado:
       tiempo_actual = pygame.time.get_ticks()
       if tiempo_actual - tiempo_inicio_pantalla_resultado >= 3000:
         flag_espera = False
         print("Han pasado 3 segundos")
         accion = mostrar_pantalla_resultado(ventana, ranking_ejemplo)
-      return accion
+        
     
     pygame.display.flip()
     reloj.tick(FPS)
+  return accion  
     # if avance > 1000:
     #   # Por ejemplo, si el jugador cruza primero:
     #   resultado_partida = True   # O False, según corresponda

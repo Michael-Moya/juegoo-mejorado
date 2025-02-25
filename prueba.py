@@ -29,7 +29,7 @@ if mostrar_menu(ventana) == "jugar" :
     lista_meta = filtrar_linea_meta(lista_lineas_meta)
 
     # Ajustar la frecuencia de generación
-    avance, charcos,lista_meta = iniciar_movimiento_juego(ventana, fondo, auto_principal, avance, auto_cpu, charcos, lista_meta)
+    avance, charcos,lista_meta, flag_ganador = iniciar_movimiento_juego(ventana, fondo, auto_principal, avance, auto_cpu, charcos, lista_meta)
     fundir_todo(ventana, fondo, auto_principal, auto_cpu, charcos, lista_meta)
     #pygame.draw.line(ventana, (255, 0, 0), (100, 100), (700, 500), 1)
     #print(len(lista_meta))
@@ -46,9 +46,9 @@ if mostrar_menu(ventana) == "jugar" :
 
     pygame.display.flip()
     reloj.tick(FPS)
-    if flag_ganador :
-      print("--------------perdon ganador----------------")
-      mostrar_pantalla_resultado(ventana, ranking_ejemplo)
+    # if flag_ganador :
+    #   print("--------------perdon ganador----------------")
+    #   mostrar_pantalla_resultado(ventana, ranking_ejemplo)
 elif mostrar_menu(ventana) == "ranking" :
   #mostrar_pantalla_ranking(ventana)
   mostrar_ranking(ventana, ranking_ejemplo)
