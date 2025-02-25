@@ -6,9 +6,11 @@ from auto_principal import *
 from auto_cpu import *
 from charco import *
 from linea_meta import *
+from prueba_ventana_resultado import mostrar_pantalla_resultado
 x_presionada = False
 x_presionada_previamente = False
 flag_ganador = False
+ganador_auto_principal = False
 def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, auto_cpu:AutoCpu, list_charcos:list, lista_meta:list )->float:
   global x_presionada_previamente
   global x_presionada
@@ -29,15 +31,18 @@ def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, au
   if not flag_ganador and definir_ganador(meta_final,[auto_,auto_cpu]):
     flag_ganador = True
 
-  return avance_, list_charcos, lista_meta
+  return avance_, list_charcos, lista_meta,flag_ganador
 
 def definir_ganador(meta_final, lista_auto:list ):
   #flag = any(isinstance(meta_final, Meta) and meta_final.colisionar(auto) for auto in lista_auto)
+  global ganador_auto_principal
   flag = False
   for auto in lista_auto:
     if isinstance(meta_final, Meta) and meta_final.colisionar(auto):
       flag = True
       print(f"GANADOR : {meta_final.ganador.nombre}")
+      if isinstance(auto,AutoPrincipal):
+        ganador_auto_principal = True
       break
   return flag
 

@@ -8,7 +8,7 @@ from auto_cpu import *
 class AutoPrincipal(Auto) :
   def __init__(self)-> None:
     super().__init__("auto_amarillo.jpg")
-    self.nombre = "Auto_Principal---------------------------------------------------------"
+    self.nombre = "Auto_Principal-----"
     self.rect.topleft = [400,400]
     self.posicionar()
     self.rect.width = 100

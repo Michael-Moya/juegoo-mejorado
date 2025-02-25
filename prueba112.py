@@ -1,23 +1,10 @@
+# instancia_objetos.py
 import pygame
 from constantes import *
-from fondo import *
-from auto import * 
-from auto_principal import *
-from auto_cpu import *
-from linea_meta import * 
-reloj = pygame.time.Clock()
-#Se crea una ventana
-ventana = pygame.display.set_mode((ANCHO_VENTANA,ALTURA_VENTANA)) 
-# elementos del juego
-fondo = Fondo("carretera.png")     
-auto_principal = AutoPrincipal()
-auto_cpu = AutoCpu(POSICION_INICIAL_CPU)
-meta_inicio = Meta([0,0])
-meta_final = Meta([0,-3000])
-lista_lineas_meta = [meta_inicio, meta_final]
-
-reloj = pygame.time.Clock()
-
+from fondo import Fondo
+from auto_principal import AutoPrincipal
+from auto_cpu import AutoCpu
+from linea_meta import Meta
 
 def reiniciar_objetos():
     """
@@ -50,3 +37,41 @@ def reiniciar_objetos():
     # Reiniciar el reloj y el tiempo de inicio
     reloj = pygame.time.Clock()
     tiempo_inicio = pygame.time.get_ticks()
+
+    ANCHO_VENTANA = 1000
+    ALTURA_VENTANA = 700
+    POSICION_FONDO_Y= 0
+    POSICION_FONDO_X= 0
+    FPS = 50
+    MOV_FONDO = 30
+
+    POSICION_INICIAL_CPU = [600, 400]
+
+    ANCHO_RECT_AUTO = 100
+    ALTURA_RECT_AUTO = 200
+    POSICION_CHARCO_X = 0
+    POSICION_CHARCO_Y = 0
+    COLOR_TIMER = colores.WHITE
+
+    COLOR_RECT_AUTO = colores.RED1
+    COLOR_RECT_CHARCO = colores.BROWN
+
+    #Variables iniciadoras
+    avance = 0
+    running = True
+    juego_pausado = False
+    # Variables de tiempo
+    tiempo_inicio = pygame.time.get_ticks()
+    tiempo_espera = 100  # Tiempo de espera en milisegundos
+    tiempo_diferencia = 0
+
+    temporizador_iniciado = False  # 🚀 Nueva bandera para controlar el temporizador
+
+    lista_meta = []
+    charcos = []
+    autos_cpu = []
+
+    seleccionado = False
+    ranking_ejemplo = ranking_ejemplo = [
+        {"name": "______", "time": "00:05:30", "score": 1000},    
+    ]

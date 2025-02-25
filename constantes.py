@@ -27,9 +27,14 @@ tiempo_inicio = pygame.time.get_ticks()
 tiempo_espera = 100  # Tiempo de espera en milisegundos
 tiempo_diferencia = 0
 
-temporizador_iniciado = False  # 🚀 Nueva bandera para controlar el temporizador
 
 lista_meta = []
 charcos = []
 autos_cpu = []
 
+temporizador_iniciado = False  # 🚀 Nueva bandera para controlar el temporizador
+seleccionado = False  # Bandera para controlar que solo se seleccione una vez
+
+ranking_ejemplo = ranking_ejemplo = [
+    {"name": "______", "time": "00:05:30", "score": 1000},    
+]

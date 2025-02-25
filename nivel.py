@@ -13,8 +13,8 @@ COLOR_TEXTO_RESALTADO = (255, 255, 0)  # Amarillo cuando se resalta
 FUENTE = pygame.font.Font(None, 50)
 
 # Posiciones de los textos
-posicion_nivel1 = (ANCHO_VENTANA // 2 - 100, ALTURA_VENTANA // 2 - 50)
-posicion_nivel2 = (ANCHO_VENTANA // 2 - 100, ALTURA_VENTANA // 2 + 50)
+posicion_nivel1 = (ANCHO_VENTANA // 2 - 70, ALTURA_VENTANA // 2 - 50)
+posicion_nivel2 = (ANCHO_VENTANA // 2 - 70, ALTURA_VENTANA // 2 + 50)
 
 # Rectángulos invisibles para la detección de colisión
 rect_nivel1 = pygame.Rect(posicion_nivel1[0], posicion_nivel1[1], 200, 50)

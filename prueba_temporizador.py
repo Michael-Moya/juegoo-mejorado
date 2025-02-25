@@ -10,7 +10,7 @@ VERDE = (0, 255, 0)
 GRIS = (100, 100, 100)
 
 # Posiciones de los círculos
-posiciones_circulos = [(150, 200), (300, 200), (450, 200), (600, 200), (750, 200)]
+posiciones_circulos = [(200,200),(350,200),(500,200),(650,200),(800,200)]
 radio_circulo = 30
 temporizador_iniciado = False
 
@@ -50,7 +50,6 @@ def iniciar_temporizador(pantalla):
 
         # Actualizar fondo y objetos mientras corre el temporizador
         fundir_todo(pantalla, fondo, auto_principal, auto_cpu, charcos, lista_lineas_meta )
-        print(id(lista_lineas_meta),"en cronometoooooooooooooooooo")
         # Dibujar los círculos actualizados
         dibujar_circulos(pantalla, indice_activo)
 
