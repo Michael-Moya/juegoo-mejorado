@@ -44,4 +44,10 @@ ranking_ejemplo = ranking_ejemplo = [
 x_presionada = False
 x_presionada_previamente = False
 ranking = []
-# constantes.py
+
+# Inicializar el módulo de sonido de Pygame
+pygame.mixer.init()
+
+# Cargar sonidos
+sonido_aceleracion = pygame.mixer.Sound("sonido_aceleracion.mp3")  # 🔥 Sonido al presionar X
+sonido_deslizamiento = pygame.mixer.Sound("sonido_deslizamiento.mp3")  # 🔥 Sonido al deslizarse

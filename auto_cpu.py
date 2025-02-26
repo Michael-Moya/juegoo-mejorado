@@ -18,7 +18,7 @@ class AutoCpu(Auto) :
     self.direccion_automatico = 1
 
   def mover(self, incremento_fondo:float):
-    movimiento = 25
+    movimiento = 2
     variacion_movimiento = incremento_fondo - movimiento
     #print("variacion de movimiento",variacion_movimiento)
     self.rect.y += variacion_movimiento

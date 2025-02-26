@@ -103,7 +103,7 @@ def mostrar_ranking(pantalla, ranking):
         clock.tick(30)
 
 
-def actualizar_ranking(nombre, tiempo_total):
+def actualizar_ranking(nombre, tiempo_total ):
     """Agrega un nuevo tiempo al ranking si está dentro del top 5."""
     
     tiempo_formateado = f"{tiempo_total // 60000:02}:{(tiempo_total // 1000) % 60:02}:{tiempo_total % 1000:03}"
@@ -132,6 +132,7 @@ def guardar_ranking(vaciar=False):
     - Si `vaciar=True`, borra la lista `ranking` y elimina `ranking.json` y `ranking.csv`.
     - Si `vaciar=False`, guarda los datos en JSON y CSV solo si hay información.
     """
+    """Guarda un nuevo puntaje en la base de datos."""
     if vaciar:
         constantes.ranking = []  # 🔥 Vaciar la lista antes de cerrar el juego
         print("⚠️ Ranking vaciado.")
@@ -167,31 +168,16 @@ def guardar_ranking(vaciar=False):
             print("❌ Error guardando CSV:", e)
     else:
         print("⚠️ No se guardó el ranking porque está vacío.")
-def cargar_ranking():
-    """Carga el ranking desde un archivo JSON al iniciar el juego."""
-    try:
-        with open("ranking.json", "r", encoding="utf-8") as f:
-            constantes.ranking = json.load(f)
-        print("✅ Ranking cargado desde ranking.json")
-    except FileNotFoundError:
-        constantes.ranking = []  # Si no hay archivo, iniciamos con una lista vacía
-        print("⚠️ No se encontró ranking.json, se inicia con un ranking vacío.")
-    except Exception as e:
-        print("❌ Error cargando ranking:", e)
-        constantes.ranking = []  # En caso de error, iniciamos con una lista vacía
 
-# Llamar a la función al iniciar el juego
-
-
-
-# Ejemplo de datos de ranking (estos se agregarían cada vez que ganes una partida)
-ranking_ejemplo = [
-    {"name": "Jugador1", "time": "00:05:30", "score": 1000},
-    {"name": "Florencia", "time": "00:04:45", "score": 1200},
-    {"name": "Jriccardo", "time": "00:06:10", "score": 900},
-]
-
-if __name__ == "__main__":
-    pygame.init()
-    pantalla = pygame.display.set_mode((WIDTH, HEIGHT))
-    mostrar_ranking(pantalla, ranking_ejemplo)
+# def cargar_ranking():
+#     """Carga el ranking desde un archivo JSON al iniciar el juego."""
+#     try:
+#         with open("ranking.json", "r", encoding="utf-8") as f:
+#             constantes.ranking = json.load(f)
+#         print("✅ Ranking cargado desde ranking.json")
+#     except FileNotFoundError:
+#         constantes.ranking = []  # Si no hay archivo, iniciamos con una lista vacía
+#         print("⚠️ No se encontró ranking.json, se inicia con un ranking vacío.")
+#     except Exception as e:
+#         print("❌ Error cargando ranking:", e)
+#         constantes.ranking = []  # En caso de error, iniciamos con una lista vacía

@@ -1,7 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 from colores import *
-from constantes import ANCHO_VENTANA
+from constantes import ANCHO_VENTANA,sonido_deslizamiento
 
 class Auto(ABC) :
   def __init__(self,path) -> None:
@@ -30,7 +30,7 @@ class Auto(ABC) :
   def administrar_colision(self):
     if self.cont_desestabilizacion < 1:
       self.desestabilizar()
-    
+
   def desestabilizar(self):
     self.is_stabilizing = True
     self.cont_desestabilizacion +=1 
@@ -38,18 +38,20 @@ class Auto(ABC) :
       # Registra el tiempo de inicio
   def controlar_la_desestabilización(self):
     if self.is_stabilizing:
+      sonido_deslizamiento.play()
       tiempo_actual = pygame.time.get_ticks()
       tiempo_diferencia = tiempo_actual - self.start_time
       if tiempo_diferencia <= 200 :  # 300 ms de desestabilización
         self.imagen_normal = self.lados[0]  # Mueve el objet o a la derecha
-      elif tiempo_diferencia > 200 and tiempo_diferencia < 400  :
+      elif tiempo_diferencia > 200 and tiempo_diferencia < 600  :
         self.imagen_normal = self.lados[2] 
       else:
         self.is_stabilizing = False
+      sonido_deslizamiento.play()
     else:       
         self.imagen_normal = self.lados[1] # Regresa a la posición original
         self.cont_desestabilizacion = 0
-  
+
   def __get_superficie(self, path, filas, columnas) -> list:
     lista = []
     superfice_imagen = pygame.image.load(path)

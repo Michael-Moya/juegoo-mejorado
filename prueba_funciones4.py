@@ -21,6 +21,7 @@ def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, au
   avance_ = round(generar_movimiento_juego(ventana_, fondo_, auto_, avance_))
   if (x_presionada == False and x_presionada_previamente == True) or auto_.is_stabilizing:
     avance_ = disminuir_movimiento_juego(ventana_, fondo_, auto_, avance_)
+
   
   generar_movimiento_charcos(list_charcos, avance_)
   generar_movimiento_cpu(auto_cpu, avance_)
@@ -117,9 +118,13 @@ def generar_movimiento_juego(ventana_, fondo_:Fondo ,auto_:AutoPrincipal ,avance
     avance_ = MOV_FONDO
     fondo_.movimiento(ventana_, avance_ )    
     auto_.mover(avance_)
+    if not x_presionada:
+      constantes.sonido_aceleracion.play()  #Reproducir sonido solo si es la primera vez que se presiona X
     x_presionada = True
     x_presionada_previamente = True
   else:
+    if x_presionada:
+      constantes.sonido_aceleracion.stop()
     x_presionada = False
   return avance_
 #check
