@@ -1,5 +1,5 @@
 import pygame
-from constantes import FPS
+import constantes  
 from instacia_objetos import reloj, fondo,charcos,auto_principal,auto_cpu, lista_lineas_meta
 from funciones import fundir_todo
 
@@ -12,7 +12,6 @@ GRIS = (100, 100, 100)
 # Posiciones de los círculos
 posiciones_circulos = [(200,200),(350,200),(500,200),(650,200),(800,200)]
 radio_circulo = 30
-temporizador_iniciado = False
 
 
 def dibujar_circulos(pantalla, indice_activo):
@@ -31,7 +30,7 @@ def iniciar_temporizador(pantalla):
 
     corriendo = True
     while corriendo:
-        reloj.tick(FPS)  # Mantener la tasa de cuadros
+        reloj.tick(constantes.FPS)  # Mantener la tasa de cuadros
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -62,7 +61,7 @@ def iniciar_temporizador(pantalla):
     # Esperar 1 segundo sin bloquear
     tiempo_final = pygame.time.get_ticks()
     while pygame.time.get_ticks() - tiempo_final < 1000:
-        reloj.tick(FPS)
+        reloj.tick(constantes.FPS)
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 pygame.quit()
@@ -71,7 +70,7 @@ def iniciar_temporizador(pantalla):
 def iniciar_temporizador_carrera(ventana):
     ventana.blit(fondo.imagen,fondo.posicion)
     """Lanza el temporizador si no ha sido ejecutado previamente."""
-    global temporizador_iniciado
-    if not temporizador_iniciado:
+    #global temporizador_iniciado
+    if not constantes.temporizador_iniciado:
         iniciar_temporizador(ventana)
-        temporizador_iniciado = True  # Evita repetir el temporizador
+        constantes.temporizador_iniciado = True  # Evita repetir el temporizador

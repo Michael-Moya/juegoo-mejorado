@@ -31,6 +31,7 @@ def reiniciar_juego(nivel_seleccionado):
 
     constantes.flag_ganador = False
     constantes.ganador_auto_principal = False
+    constantes.temporizador_iniciado = False
     tiempo_inicio = None  # 🔥 Asegurar que el temporizador se reinicia correctamente
     print(f"🚀 flag_ganador REINICIADO a {constantes.flag_ganador} en reiniciar_juego()")
     # flag_ganador = False
@@ -45,7 +46,6 @@ def jugar():
     accion = None
     avance = 0
 
-    # ✅ Guardamos el nivel seleccionado la primera vez
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
 
     while True:  # 🔄 Este bucle permite reiniciar el juego sin volver al menú

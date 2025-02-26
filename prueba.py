@@ -31,23 +31,28 @@ def reiniciar_juego(nivel_seleccionado):
 
     constantes.flag_ganador = False
     constantes.ganador_auto_principal = False
+    constantes.temporizador_iniciado = False
     tiempo_inicio = None  # 🔥 Asegurar que el temporizador se reinicia correctamente
+    print(f"🚀 flag_ganador REINICIADO a {constantes.flag_ganador} en reiniciar_juego()")
     # flag_ganador = False
     # ganador_auto_principal = False
     # tiempo_inicio = None  # 🔥 Asegurar que el temporizador se reinicia correctamente
     # # 🔄 Reiniciar variables de estado
+    print(f"🔄 Reinicio: flag_ganador = {constantes.flag_ganador}, ganador_auto_principal = {constantes.ganador_auto_principal}")
+
 
 def jugar():
     global  charcos, tiempo_inicio
     accion = None
     avance = 0
 
-    # ✅ Guardamos el nivel seleccionado la primera vez
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
 
     while True:  # 🔄 Este bucle permite reiniciar el juego sin volver al menú
         
+        print(f"🔄 Reiniciando juego, flag_ganador antes de reset: {constantes.flag_ganador}")
         reiniciar_juego(nivel_seleccionado)  # 🔥 Reiniciar el juego
+        print(f"✅ flag_ganador después de reset: {constantes.flag_ganador}")
 
         iniciar_temporizador_carrera(ventana)
 
@@ -60,12 +65,16 @@ def jugar():
             #print(f"flag_ganador dentro de jugar(): {flag_ganador}")
             fundir_todo(ventana, fondo, auto_principal, auto_cpu, charcos, lista_meta)
             if flag_ganador_:
+
                 if tiempo_inicio is None:  # ✅ SOLO asignamos el tiempo la primera vez
                     tiempo_inicio = pygame.time.get_ticks()
                     #print(f"⏳ Nuevo tiempo_inicio asignado: {tiempo_inicio}")
 
-            if constantes.flag_ganador and tiempo_inicio is not None and pygame.time.get_ticks() - tiempo_inicio >= 1000:
+            if constantes.flag_ganador and tiempo_inicio is not None and pygame.time.get_ticks() - tiempo_inicio >= 3000:
+                print(f"⚠️ SE MUESTRA LA PANTALLA DE RESULTADOS | GANADOR: {constantes.ganador_auto_principal}")
+
                 accion = mostrar_pantalla_resultado(ventana, constantes.ganador_auto_principal, ranking_ejemplo)
+      
                 break
 
             pygame.display.flip()
