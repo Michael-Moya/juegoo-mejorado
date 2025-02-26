@@ -8,6 +8,7 @@ from prueba_ranking import mostrar_ranking
 from prueba_funciones4 import *
 from prueba_ranking import actualizar_ranking
 from prueba_ventana_resultado import mostrar_pantalla_resultado
+from prueba_ingresar_nombre import ingresar_nombre
 import constantes
 def reiniciar_juego(nivel_seleccionado):
     """Reinicia los objetos y variables del juego sin volver al menú."""
@@ -47,7 +48,7 @@ def jugar():
     avance = 0
 
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
-
+    nombre_jugador = ingresar_nombre(ventana)
     while True:  # 🔄 Este bucle permite reiniciar el juego sin volver al menú
         
         print(f"🔄 Reiniciando juego, flag_ganador antes de reset: {constantes.flag_ganador}")
