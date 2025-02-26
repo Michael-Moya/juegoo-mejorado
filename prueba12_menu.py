@@ -1,7 +1,7 @@
 import pygame
 import random
 import sys
-
+from instacia_objetos import *
 
 
 # Configuración de la ventana
@@ -43,7 +43,8 @@ def comprobar_colision(posicion_cuadrado):
 # Función para mostrar el menú
 def mostrar_menu(pantalla):
     while True:
-        pantalla.fill(WHITE)
+        ventana.blit(fondo.imagen, fondo.posicion)
+
         fuente = pygame.font.Font(None, 74)
         texto_titulo = fuente.render("Heavy Racing", True, BLACK)
         pantalla.blit(texto_titulo, (WIDTH // 2 - texto_titulo.get_width() // 2, HEIGHT // 2 - 100))

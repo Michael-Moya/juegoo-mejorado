@@ -31,6 +31,7 @@ def ingresar_nombre(ventana):
                     if len(texto_ingresado) < 15:  # Limitar a 15 caracteres
                         texto_ingresado += evento.unicode
 
+        
         # Dibujar caja de entrada
         pygame.draw.rect(ventana, (255, 255, 255), input_rect, 2)  # Borde blanco
 

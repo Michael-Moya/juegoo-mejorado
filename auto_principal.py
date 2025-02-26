@@ -16,6 +16,23 @@ class AutoPrincipal(Auto) :
     self.color_rect = COLOR_RECT_AUTO
     self.cont = 0
     self.posicion_real = self.rect.topleft
+    self.tiempo_inicio = None  # ⏳ Nuevo atributo para registrar tiempo de inicio
+
+  def iniciar_tiempo_carrera(self):
+      """Guarda el tiempo en que el auto comienza a moverse."""
+      if self.tiempo_inicio is None:
+          self.tiempo_inicio = pygame.time.get_ticks()
+
+  def obtener_tiempo_transcurrido(self):
+      """Calcula el tiempo en milisegundos desde el inicio hasta la meta."""
+      if self.tiempo_inicio is not None:
+          return pygame.time.get_ticks() - self.tiempo_inicio
+      return 0  # Si nunca se inició, el tiempo es 0
+
+  def reiniciar_tiempo_carrera(self):
+      """Reinicia el tiempo de carrera al volver a jugar."""
+      self.tiempo_inicio = None
+
   def mover(self, incremento):
     self.__direccionar()
     movimiento = self.__avanzar_o_retroceder()

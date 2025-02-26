@@ -6,7 +6,6 @@ from prueba_temporizador import iniciar_temporizador_carrera
 from prueba12_menu import mostrar_menu
 from prueba_ranking import mostrar_ranking
 from prueba_funciones4 import *
-from prueba_ranking import actualizar_ranking
 from prueba_ventana_resultado import mostrar_pantalla_resultado
 from prueba_ingresar_nombre import ingresar_nombre
 import constantes
@@ -48,15 +47,16 @@ def jugar():
     avance = 0
 
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
-    nombre_jugador = ingresar_nombre(ventana)
+    auto_principal.nombre = ingresar_nombre(ventana)
     while True:  # 🔄 Este bucle permite reiniciar el juego sin volver al menú
-        
         print(f"🔄 Reiniciando juego, flag_ganador antes de reset: {constantes.flag_ganador}")
         reiniciar_juego(nivel_seleccionado)  # 🔥 Reiniciar el juego
         print(f"✅ flag_ganador después de reset: {constantes.flag_ganador}")
 
         iniciar_temporizador_carrera(ventana)
 
+        auto_principal.iniciar_tiempo_carrera()  # 🔥 Ahora el tiempo del auto comienza correctamente
+        print("⏱️ Tiempo de carrera iniciado después del temporizador.")
         while cerrar_ventana():
             lista_meta = filtrar_linea_meta(lista_lineas_meta)
 
@@ -66,15 +66,17 @@ def jugar():
             #print(f"flag_ganador dentro de jugar(): {flag_ganador}")
             fundir_todo(ventana, fondo, auto_principal, auto_cpu, charcos, lista_meta)
             if flag_ganador_:
-
+                
                 if tiempo_inicio is None:  # ✅ SOLO asignamos el tiempo la primera vez
                     tiempo_inicio = pygame.time.get_ticks()
+                    tiempo_total = auto_principal.obtener_tiempo_transcurrido()
+                    tiempo_formateado = f"{tiempo_total // 60000:02}:{(tiempo_total // 1000) % 60:02}:{tiempo_total % 1000:03}"
+                    print("tiempototal--------------------------------",tiempo_total)
                     #print(f"⏳ Nuevo tiempo_inicio asignado: {tiempo_inicio}")
 
-            if constantes.flag_ganador and tiempo_inicio is not None and pygame.time.get_ticks() - tiempo_inicio >= 3000:
+            if constantes.flag_ganador and tiempo_inicio is not None and pygame.time.get_ticks() - tiempo_inicio >= 1000:
                 print(f"⚠️ SE MUESTRA LA PANTALLA DE RESULTADOS | GANADOR: {constantes.ganador_auto_principal}")
-
-                accion = mostrar_pantalla_resultado(ventana, constantes.ganador_auto_principal, ranking_ejemplo)
+                accion = mostrar_pantalla_resultado(ventana, constantes.ganador_auto_principal, tiempo_formateado)
       
                 break
 
