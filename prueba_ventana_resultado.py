@@ -1,8 +1,8 @@
 # pantalla_resultado.py
 import pygame
 import sys
-from instacia_objetos import fondo, auto_principal, ALTURA_VENTANA, ANCHO_VENTANA
-
+from instacia_objetos import fondo, ALTURA_VENTANA, ANCHO_VENTANA
+import instacia_objetos
 # Constantes (ajústalas según tu proyecto)
 BLANCO  = (255, 255, 255)
 NEGRO   = (0, 0, 0)
@@ -76,7 +76,7 @@ def mostrar_pantalla_resultado(ventana, resultado, tiempo=""):
         
         # Configurar mensajes según el resultado
         if resultado == True:
-            mensaje = f"¡Ganaste {auto_principal.nombre}!"
+            mensaje = f"¡Ganaste {instacia_objetos.auto_principal.nombre}!"
             submensaje = f"Tiempo: {tiempo}"
             color_mensaje = AZUL
         else:

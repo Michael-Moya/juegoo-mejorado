@@ -4,13 +4,12 @@ from instacia_objetos import *
 from nivel import seleccionar_nivel
 from prueba_temporizador import iniciar_temporizador_carrera
 from prueba12_menu import mostrar_menu
-from prueba_ranking import mostrar_ranking
+from prueba_ranking import mostrar_ranking, actualizar_ranking
 from funciones import *
 from prueba_ventana_resultado import mostrar_pantalla_resultado
 from prueba_ingresar_nombre import ingresar_nombre
 import constantes
-
-def reiniciar_juego(nivel_seleccionado):
+def reiniciar_juego(nivel_seleccionado, nombre):
     """Reinicia los objetos y variables del juego sin volver al menú."""
     global auto_principal, auto_cpu, fondo, meta_final, lista_lineas_meta, charcos
     global  tiempo_inicio
@@ -18,12 +17,15 @@ def reiniciar_juego(nivel_seleccionado):
     # 🔥 Limpiar listas para evitar acumulación de memoria
     lista_lineas_meta.clear()
     charcos.clear()
-
+    
     # 🔄 Crear nuevas instancias de los objetos
-    auto_principal = AutoPrincipal()
+
     auto_cpu = AutoCpu(POSICION_INICIAL_CPU)
     fondo = Fondo("carretera.png")
-
+    auto_principal = AutoPrincipal()
+    auto_principal.nombre = nombre
+    #auto_principal.rect.topleft = [400,400]
+    #auto_principal.posicionar()   
     meta_inicio = Meta([0, 0])
     meta_final = Meta([0, -3000])
     lista_lineas_meta.extend([meta_inicio, meta_final])
@@ -48,12 +50,12 @@ def jugar():
     avance = 0
 
     seleccionado, nivel_seleccionado = seleccionar_nivel(ventana)
-    auto_principal.nombre = ingresar_nombre(ventana)
+    nombre_ingresado = ingresar_nombre(ventana)
+    auto_principal.nombre = nombre_ingresado
     while True:  # 🔄 Este bucle permite reiniciar el juego sin volver al menú
         print(f"🔄 Reiniciando juego, flag_ganador antes de reset: {constantes.flag_ganador}")
-        reiniciar_juego(nivel_seleccionado)  # 🔥 Reiniciar el juego
+        reiniciar_juego(nivel_seleccionado,nombre_ingresado)  # 🔥 Reiniciar el juego
         print(f"✅ flag_ganador después de reset: {constantes.flag_ganador}")
-
         iniciar_temporizador_carrera(ventana)
 
         auto_principal.iniciar_tiempo_carrera()  # 🔥 Ahora el tiempo del auto comienza correctamente
@@ -78,7 +80,8 @@ def jugar():
             if constantes.flag_ganador and tiempo_inicio is not None and pygame.time.get_ticks() - tiempo_inicio >= 1000:
                 print(f"⚠️ SE MUESTRA LA PANTALLA DE RESULTADOS | GANADOR: {constantes.ganador_auto_principal}")
                 accion = mostrar_pantalla_resultado(ventana, constantes.ganador_auto_principal, tiempo_formateado)
-      
+                if constantes.ganador_auto_principal:
+                    actualizar_ranking(auto_principal.nombre, tiempo_total)
                 break
 
             pygame.display.flip()
@@ -102,12 +105,27 @@ def main():
             if accion == "menu":
                 continue  
         elif opcion_menu == "ranking":
-            mostrar_ranking(ventana, ranking_ejemplo)
+            mostrar_ranking(ventana, constantes.ranking)
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
+                constantes.ranking = []
+                #guardar_ranking(vaciar=True)
                 pygame.quit()
                 sys.exit()
+
+import os
+
+# 🔥 Asegurar que los archivos sean eliminados si existen al iniciar el juego
+if os.path.exists("ranking.json"):
+    os.remove("ranking.json")
+    print("🗑️ Archivo ranking.json eliminado al iniciar el juego.")
+
+if os.path.exists("ranking.csv"):
+    os.remove("ranking.csv")
+    print("🗑️ Archivo ranking.csv eliminado al iniciar el juego.")
+
+constantes.ranking = []  # 🔥 Vaciar el ranking al iniciar
 
 if __name__ == "__main__":
     os.system('cls')  

@@ -43,4 +43,5 @@ ranking_ejemplo = ranking_ejemplo = [
 ]
 x_presionada = False
 x_presionada_previamente = False
+ranking = []
 # constantes.py
