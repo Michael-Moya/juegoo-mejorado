@@ -11,6 +11,7 @@ AMARILLO = (255, 215, 0)
 ROJO    = (255, 0, 0)
 
 def mostrar_pantalla_resultado(ventana, resultado, tiempo=""):
+    print(f"⚠️ SE MUESTRA LA PANTALLA DE RESULTADOS | GANADOR: {resultado}")  # 🔥 Imprimir el resultado
     """
     Muestra una pantalla de resultado en la misma ventana.
     

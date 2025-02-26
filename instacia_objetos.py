@@ -12,41 +12,65 @@ ventana = pygame.display.set_mode((ANCHO_VENTANA,ALTURA_VENTANA))
 fondo = Fondo("carretera.png")     
 auto_principal = AutoPrincipal()
 auto_cpu = AutoCpu(POSICION_INICIAL_CPU)
-meta_inicio = Meta([0,0])
-meta_final = Meta([0,-3000])
+# meta_inicio = Meta([0,0])
+# meta_final = Meta([0,-3000])
+# lista_lineas_meta = [meta_inicio, meta_final]
+
+# reloj = pygame.time.Clock()
+
+
+# def reiniciar_objetos():
+#     global ventana, fondo, auto_principal, auto_cpu, meta_inicio, meta_final, lista_lineas_meta, avance, charcos, ranking_ejemplo, reloj, tiempo_inicio
+
+#     ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTURA_VENTANA))
+    
+#     fondo = Fondo("carretera.png")
+#     auto_principal = AutoPrincipal()
+#     auto_cpu = AutoCpu(POSICION_INICIAL_CPU)
+    
+#     meta_inicio = Meta([0, 0])
+#     meta_final = Meta([0, -3000])
+#     lista_lineas_meta = [meta_inicio, meta_final]
+
+#     # 🔥 Verificar si la posición de la meta es la correcta
+#     print(f"Meta Final después de reiniciar: {meta_final.rect}")
+
+#     # Asegurar que `Meta._ultima_meta` se actualiza correctamente
+#     Meta._ultima_meta = meta_final  # <--- IMPORTANTE
+
+#     avance = 0
+#     charcos = []
+    
+#     ranking_ejemplo = [
+#         {"name": "______", "time": "00:05:30", "score": 1000},
+#     ]
+    
+#     reloj = pygame.time.Clock()
+# instacia_objetos.py
+meta_inicio = Meta([0, 0])
+meta_final = Meta([0, -3000])
+Meta._ultima_meta = meta_final  # ✅ ACTUALIZA `Meta._ultima_meta` correctamente
 lista_lineas_meta = [meta_inicio, meta_final]
 
-reloj = pygame.time.Clock()
-
-
 def reiniciar_objetos():
-    """
-    Reinicia y crea nuevamente todos los objetos y variables del juego.
-    """
-    global ventana, fondo, auto_principal, auto_cpu, meta_inicio, meta_final, lista_lineas_meta, avance, charcos, ranking_ejemplo, reloj, tiempo_inicio
+    global auto_principal, auto_cpu, fondo, meta_final, lista_lineas_meta, avance, charcos, ranking_ejemplo, reloj, tiempo_inicio
 
-    # Crear la ventana
     ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTURA_VENTANA))
     
-    # Crear el fondo y los autos
     fondo = Fondo("carretera.png")
     auto_principal = AutoPrincipal()
     auto_cpu = AutoCpu(POSICION_INICIAL_CPU)
     
-    # Crear las metas (por ejemplo, inicio y final)
     meta_inicio = Meta([0, 0])
     meta_final = Meta([0, -3000])
+    Meta._ultima_meta = meta_final  # ✅ 🔥 IMPORTANTE: Mantener la referencia actualizada
     lista_lineas_meta = [meta_inicio, meta_final]
-    
-    # Reiniciar variables de avance y elementos móviles
+
     avance = 0
     charcos = []
-    
-    # Reiniciar ranking (puedes mantenerlo o reiniciarlo según tu lógica)
+
     ranking_ejemplo = [
         {"name": "______", "time": "00:05:30", "score": 1000},
     ]
-    
-    # Reiniciar el reloj y el tiempo de inicio
+
     reloj = pygame.time.Clock()
-    tiempo_inicio = pygame.time.get_ticks()

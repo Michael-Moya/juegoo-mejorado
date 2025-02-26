@@ -6,17 +6,18 @@ from auto_principal import *
 from auto_cpu import *
 from charco import *
 from linea_meta import *
-from prueba_ventana_resultado import mostrar_pantalla_resultado
+#from constantes import flag_ganador, ganador_auto_principal
+import constantes
+import sys
 x_presionada = False
 x_presionada_previamente = False
-flag_ganador = False
-ganador_auto_principal = False
-def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, auto_cpu:AutoCpu, list_charcos:list, lista_meta:list )->float:
+
+
+def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, auto_cpu:AutoCpu, list_charcos:list, lista_meta:list ):
   global x_presionada_previamente
   global x_presionada
-  global flag_ganador
   meta_final = Meta._ultima_meta
-  
+  ganador_auto_principal = constantes.ganador_auto_principal
   avance_ = round(generar_movimiento_juego(ventana_, fondo_, auto_, avance_))
   if (x_presionada == False and x_presionada_previamente == True) or auto_.is_stabilizing:
     avance_ = disminuir_movimiento_juego(ventana_, fondo_, auto_, avance_)
@@ -28,23 +29,24 @@ def iniciar_movimiento_juego(ventana_, fondo_, auto_: AutoPrincipal, avance_, au
   controlar_desestabilizacion_autos(auto_, auto_cpu)
 
   generar_movimiento_metas(lista_meta,avance_)
-  if not flag_ganador and definir_ganador(meta_final,[auto_,auto_cpu]):
-    flag_ganador = True
-    print(f"---------{flag_ganador}------------")
-    mostrar_pantalla_resultado(ventana_, ganador_auto_principal,  ranking_ejemplo)
-  return avance_, list_charcos, lista_meta,flag_ganador
+  if not constantes.flag_ganador and definir_ganador(meta_final,[auto_,auto_cpu]):
+    print("-------------------el auto gano =  ",constantes.ganador_auto_principal)
+    constantes.flag_ganador = True
+    #mostrar_pantalla_resultado(ventana_, ganador_auto_principal,  ranking_ejemplo)
+  return (avance_, list_charcos, lista_meta, constantes.flag_ganador , constantes.ganador_auto_principal)
 
 def definir_ganador(meta_final, lista_auto:list ):
-  #flag = any(isinstance(meta_final, Meta) and meta_final.colisionar(auto) for auto in lista_auto)
-  global ganador_auto_principal
   flag = False
   for auto in lista_auto:
     if isinstance(meta_final, Meta) and meta_final.colisionar(auto):
       flag = True
-      print(f"GANADOR : {meta_final.ganador.nombre}")
-      if isinstance(auto,AutoPrincipal):
-        ganador_auto_principal = True
+      if isinstance(auto, AutoPrincipal):
+        constantes.ganador_auto_principal = True
+      else:
+        constantes.ganador_auto_principal = False
+
       break
+
   return flag
 
 def generar_movimiento_metas(lista_meta_:list,avance_):
@@ -160,8 +162,14 @@ def fundir_todo(ventana_, fondo_:Fondo , auto:AutoPrincipal , auto_cpu:AutoCpu, 
   for charco in list_charcos:
     charco.dibujar(ventana_)
 #------------------------------------
+
+#------------------------------------
 def cerrar_ventana():
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      return False 
-  return True
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            pygame.quit()
+            sys.exit()
+    return True
